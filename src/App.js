@@ -1,24 +1,35 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { AuthProvider } from './contexts/AuthContext';
+import Dashboard from './components/Dashboard';
+import Tables from './components/Tables';
+import ImportData from './components/ImportData';
+import ExportData from './components/ExportData';
+import Profile from './components/Profile';
+import Login from './components/Login';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <DndProvider backend={HTML5Backend}>
+      <AuthProvider>
+        <Router>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/tables" element={<Tables />} />
+            <Route path="/import" element={<ImportData />} />
+            <Route path="/export" element={<ExportData />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route path="/tables" element={<Tables />} />
+          </Routes>
+        </Router>
+      </AuthProvider>
+    </DndProvider>
   );
 }
 
